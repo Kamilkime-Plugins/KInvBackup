@@ -1,0 +1,64 @@
+###################################
+########## CONFIGURATION ##########
+###################################
+
+# DO NOT TOUCH THIS SECTION !!!
+configVersion: 1
+
+# Do you want to enable '/kinv info' command?
+# This command only shows the info about me (author) and shows my spigotmc account link
+# I would be very grateful if you would enable this command (but you can also disable it easily)
+enableInfoCommand: true
+
+# Do you want to backup player inventories on their join?
+backupOnJoin: true
+
+# Do you want to backup player inventories on their quit?
+backupOnQuit: true
+
+# Do you want to backup player inventories on their kick?
+backupOnKick: true
+
+# Do you want to backup player inventories on server enabling?
+backupOnServerEnabled: true
+
+# Do you want to backup player inventories on server disabling?
+backupOnServerDisabled: true
+
+# Do you want to enable autoBackup?
+autoBackupEnabled: true
+
+# How frequently do you want autoBackup to save inventories?
+# Interval must be given in seconds
+autoBackupInterval: 300
+
+# Do you want to delete backup after player's inventory is restored?
+clearBackupAfterUse: false
+
+###################################
+############# MESSAGES ############
+###################################
+
+# Shown when player has no permission to use a command
+msgNoPermission: "&cNo permission!"
+
+# Shown when player uses a command with wrong arguments
+msgCorrectUsage: "&cCorrect usage: {COMMAND}"
+
+# Shown when console uses a player-only command
+msgPlayerOnlyCommand: "&cThis is a player-only command!"
+
+# Shown when player wants to backup/restore inventory of the player that is not online
+msgNoSuchPlayer: "&cThis player is not online!"
+
+# Shown when player wants to restore/show backuped inventory of the player, but there is no such backup
+msgNoSuchBackup: "&cThis player has no backuped inventory!"
+
+# Shown when player"s inventory is successfully restored
+msgInventoryRestored: "&6{PLAYER}'s &ainventory has been successfully restored to the state from &6{DATE}&a!"
+
+# Shown when player reloads a config file
+msgConfigReloaded: "&aConfig file has been reloaded!"
+
+# Shown when player"s inventory is successfully backuped
+msgBackupCreated: "&6{PLAYER}'s &ainventory has been succesfully backuped!"
