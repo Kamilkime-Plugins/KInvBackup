@@ -3,12 +3,34 @@
 ###################################
 
 # DO NOT TOUCH THIS SECTION !!!
-configVersion: 1
+configVersion: 2
 
 # Do you want to enable '/kinv info' command?
 # This command only shows the info about me (author) and shows my spigotmc account link
 # I would be very grateful if you would enable this command (but you can also disable it easily)
 enableInfoCommand: true
+
+# Do you want to have one backup per world instead of one backup per server?
+enablePerWorldBackup: false
+
+# This option is used only if the plugin has to stop using perWorldBackups
+# When plugin has to switch to one-backup-only mode it has to change the layout of player's backup file
+# It has to stop using world names as sections and start using slot numbers as sections
+# But only ONE backup can be converted, other will be removed
+# The higher a world name is on this list, the bigger is a chance backup with that world name will be converted
+# If none of this world names are in the converted file - plugin takes a random backup and converts it to new format
+conversionWorldPriority:
+- 'world'
+- 'world_nether'
+- 'world_the_end'
+
+# If the plugin switches to perWorldBackups and there is a backup created in one-backup-only mode in the player's file - it has to be converted
+# This backup will be saved as it belongs to the world you enter below
+convertToWorld: 'world'
+
+# Do you want to backup player inventories when they change world?
+# In my opinion this option is useful only if you have perWorldBackup enabled
+backupOnWorldChange: false
 
 # Do you want to backup player inventories on their join?
 backupOnJoin: true
@@ -48,17 +70,20 @@ msgCorrectUsage: "&cCorrect usage: {COMMAND}"
 # Shown when console uses a player-only command
 msgPlayerOnlyCommand: "&cThis is a player-only command!"
 
-# Shown when player wants to backup/restore inventory of the player that is not online
+# Shown when someone wants to backup/restore inventory of the player that is not online
 msgNoSuchPlayer: "&cThis player is not online!"
 
-# Shown when player wants to restore/show backuped inventory of the player, but there is no such backup
+# Shown when someone wants to restore/show backuped inventory of the player, but there is no such backup
 msgNoSuchBackup: "&cThis player has no backuped inventory!"
 
-# Shown when player"s inventory is successfully restored
+# Shown when someone wants to restore/show backuped inventory of the player, but there is no backup for the world the player is currently in
+msgNoBackupForThisWorld: "&cThis player has no backuped inventory for {WORLD}!"
+
+# Shown when player's inventory is successfully restored
 msgInventoryRestored: "&6{PLAYER}'s &ainventory has been successfully restored to the state from &6{DATE}&a!"
 
 # Shown when player reloads a config file
 msgConfigReloaded: "&aConfig file has been reloaded!"
 
-# Shown when player"s inventory is successfully backuped
+# Shown when player's inventory is successfully backuped
 msgBackupCreated: "&6{PLAYER}'s &ainventory has been succesfully backuped!"

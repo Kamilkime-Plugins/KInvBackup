@@ -1,2 +1,2 @@
 # KInvBackup
-Simple player inventory backup plugin
+A lightweight player inventory backup plugin
