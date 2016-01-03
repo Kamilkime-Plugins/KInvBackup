@@ -9,7 +9,8 @@ import com.gmail.kamilkime.kinvbackup.Main;
 
 public class ConfigUtils {
 
-	private final static int version = 2;
+	@SuppressWarnings("deprecation")
+	private final static int version = YamlConfiguration.loadConfiguration(Main.getInst().getResource("config.yml")).getInt("configVersion");
 	private static File mainDir = Main.getInst().getDataFolder();
 	private static File cfgFile = new File(mainDir, "config.yml");
 	

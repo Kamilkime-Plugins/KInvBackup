@@ -12,10 +12,12 @@ import org.bukkit.FireworkEffect;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
+import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
@@ -67,6 +69,10 @@ public class PerWorldDataManager extends DataManager{
 				if(im instanceof SkullMeta){
 					SkullMeta sm = (SkullMeta) im;
 					if(sm.hasOwner()) yml.set(worldName + "." + i + ".skullMeta.owner", sm.getOwner());
+				}
+				if(im instanceof EnchantmentStorageMeta){
+					EnchantmentStorageMeta esm = (EnchantmentStorageMeta) im;
+					if(esm.hasStoredEnchants()) yml.set(worldName + "." + i + ".enchantmentStorageMeta.storedEnchants", BackupUtils.enchantsToString(esm.getStoredEnchants()));
 				}
 				if(im instanceof FireworkMeta){
 					FireworkMeta fm = (FireworkMeta) im;
@@ -139,6 +145,10 @@ public class PerWorldDataManager extends DataManager{
 			if(yml.get(s + ".name") !=null) im.setDisplayName(StringUtils.unymlaze(cs.getString(s + ".name")));
 			if(yml.get(s + ".lore") !=null) im.setLore(StringUtils.unymlaze(cs.getStringList(s + ".lore")));
 			if(yml.get(s + ".armorMeta") !=null) ((LeatherArmorMeta)im).setColor(Color.fromRGB(cs.getInt(s + ".armorMeta.color")));
+			if(yml.get(s + ".enchantmentStorageMeta") !=null){
+				Map<Enchantment, Integer> map = BackupUtils.stringsToEnchants(cs.getStringList(s + ".enchantmentStorageMeta.storedEnchants"));
+				for(Enchantment e : map.keySet()) ((EnchantmentStorageMeta)im).addStoredEnchant(e, map.get(e), true);
+			}
 			if(yml.get(s + ".potionMeta") !=null){
 				for(PotionEffect pe : BackupUtils.stringsToEffects(cs.getStringList(s + ".potionMeta.effects"))){
 					((PotionMeta)im).addCustomEffect(pe, true);

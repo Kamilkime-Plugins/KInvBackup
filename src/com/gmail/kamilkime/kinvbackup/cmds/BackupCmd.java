@@ -1,6 +1,7 @@
 package com.gmail.kamilkime.kinvbackup.cmds;
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -24,6 +25,18 @@ public class BackupCmd {
 			return;
 		}
 		Player p = Bukkit.getPlayer(args[1]);
+		if(Main.SET.ignoreSurvival && p.getGameMode().equals(GameMode.SURVIVAL)){
+			sender.sendMessage(Main.SET.msgGamemodeIgnored);
+			return;
+		}
+		if(Main.SET.ignoreCreative && p.getGameMode().equals(GameMode.CREATIVE)){
+			sender.sendMessage(Main.SET.msgGamemodeIgnored);
+			return;
+		}
+		if(Main.SET.ignoreAdventure && p.getGameMode().equals(GameMode.ADVENTURE)){
+			sender.sendMessage(Main.SET.msgGamemodeIgnored);
+			return;
+		}
 		Main.getDataManager().createBackup(p, p.getWorld().getName());
 		sender.sendMessage(StringUtils.color(StringUtils.insertPlayer(p.getName())));
 	}

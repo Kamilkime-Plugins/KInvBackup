@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.gmail.kamilkime.kinvbackup.cmds.MainCmd;
+import com.gmail.kamilkime.kinvbackup.cmds.MainTabCompleter;
 import com.gmail.kamilkime.kinvbackup.data.DataManager;
 import com.gmail.kamilkime.kinvbackup.data.Settings;
 import com.gmail.kamilkime.kinvbackup.listeners.InventoryClickListener;
@@ -35,6 +36,7 @@ public class Main extends JavaPlugin{
 		Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
 		Bukkit.getPluginManager().registerEvents(new InventoryClickListener(), this);
 		getCommand("kinv").setExecutor(new MainCmd());
+		getCommand("kinv").setTabCompleter(new MainTabCompleter());
 	}
 	
 	@Override

@@ -21,6 +21,9 @@ public class Settings {
 	public boolean autoBackupEnabled;
 	public boolean clearBackupAfterUse;
 	public boolean enablePerWorldBackup;
+	public boolean ignoreSurvival;
+	public boolean ignoreCreative;
+	public boolean ignoreAdventure;
 	public String convertToWorld;
 	public String msgNoPermission;
 	public String msgCorrectUsage;
@@ -31,6 +34,7 @@ public class Settings {
 	public String msgInventoryRestored;
 	public String msgConfigReloaded;
 	public String msgBackupCreated;
+	public String msgGamemodeIgnored;
 	public List<String> conversionWorldPriority = new ArrayList<String>();
 	public int autoBackupInterval;
 	
@@ -55,6 +59,9 @@ public class Settings {
 		autoBackupEnabled = Main.getInst().getConfig().getBoolean("autoBackupEnabled");
 		clearBackupAfterUse = Main.getInst().getConfig().getBoolean("clearBackupAfterUse");
 		enablePerWorldBackup = Main.getInst().getConfig().getBoolean("enablePerWorldBackup");
+		ignoreSurvival = Main.getInst().getConfig().getBoolean("ignoreSurvival");
+		ignoreCreative = Main.getInst().getConfig().getBoolean("ignoreCreative");
+		ignoreAdventure = Main.getInst().getConfig().getBoolean("ignoreAdventure");
 		autoBackupInterval = Main.getInst().getConfig().getInt("autoBackupInterval");
 		convertToWorld = Main.getInst().getConfig().getString("convertToWorld");
 		msgNoPermission = StringUtils.color(Main.getInst().getConfig().getString("msgNoPermission"));
@@ -66,6 +73,7 @@ public class Settings {
 		msgConfigReloaded = StringUtils.color(Main.getInst().getConfig().getString("msgConfigReloaded"));
 		msgBackupCreated = StringUtils.color(Main.getInst().getConfig().getString("msgBackupCreated"));
 		msgNoBackupForThisWorld = StringUtils.color(Main.getInst().getConfig().getString("msgNoBackupForThisWorld"));
+		msgGamemodeIgnored = StringUtils.color(Main.getInst().getConfig().getString("msgGamemodeIgnored"));
 		conversionWorldPriority = Main.getInst().getConfig().getStringList("conversionWorldPriority");
 		if(enablePerWorldBackup) Main.setDataManager(new PerWorldDataManager());
 		else Main.setDataManager(new OnlyOneDataManager());

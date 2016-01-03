@@ -9,13 +9,16 @@ import java.util.Map;
 
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
+import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
@@ -30,6 +33,9 @@ import com.gmail.kamilkime.kinvbackup.utils.StringUtils;
 public class OnlyOneDataManager extends DataManager{
 	
 	public void createBackup(Player p, String worldName){
+		if(Main.SET.ignoreSurvival && p.getGameMode().equals(GameMode.SURVIVAL)) return;
+		if(Main.SET.ignoreCreative && p.getGameMode().equals(GameMode.CREATIVE)) return;
+		if(Main.SET.ignoreAdventure && p.getGameMode().equals(GameMode.ADVENTURE)) return;
 		File file = getOrCreatePlayerFile(p);
 		Map<Integer, ItemStack> items = new HashMap<Integer, ItemStack>();
 		Inventory inv = p.getInventory();
@@ -71,6 +77,10 @@ public class OnlyOneDataManager extends DataManager{
 				if(im instanceof SkullMeta){
 					SkullMeta sm = (SkullMeta) im;
 					if(sm.hasOwner()) yml.set(i + ".skullMeta.owner", sm.getOwner());
+				}
+				if(im instanceof EnchantmentStorageMeta){
+					EnchantmentStorageMeta esm = (EnchantmentStorageMeta) im;
+					if(esm.hasStoredEnchants()) yml.set(i + ".enchantmentStorageMeta.storedEnchants", BackupUtils.enchantsToString(esm.getStoredEnchants()));
 				}
 				if(im instanceof FireworkMeta){
 					FireworkMeta fm = (FireworkMeta) im;
@@ -130,6 +140,10 @@ public class OnlyOneDataManager extends DataManager{
 			if(yml.get(s + ".name") !=null) im.setDisplayName(StringUtils.unymlaze(yml.getString(s + ".name")));
 			if(yml.get(s + ".lore") !=null) im.setLore(StringUtils.unymlaze(yml.getStringList(s + ".lore")));
 			if(yml.get(s + ".armorMeta") !=null) ((LeatherArmorMeta)im).setColor(Color.fromRGB(yml.getInt(s + ".armorMeta.color")));
+			if(yml.get(s + ".enchantmentStorageMeta") !=null){
+				Map<Enchantment, Integer> map = BackupUtils.stringsToEnchants(yml.getStringList(s + ".enchantmentStorageMeta.storedEnchants"));
+				for(Enchantment e : map.keySet()) ((EnchantmentStorageMeta)im).addStoredEnchant(e, map.get(e), true);
+			}
 			if(yml.get(s + ".potionMeta") !=null){
 				for(PotionEffect pe : BackupUtils.stringsToEffects(yml.getStringList(s + ".potionMeta.effects"))){
 					((PotionMeta)im).addCustomEffect(pe, true);
